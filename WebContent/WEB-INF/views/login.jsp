@@ -30,9 +30,10 @@
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
-					<h3>Spring Web</h3>
 					<div class="row">
-						<div class="col-md-9"></div>
+						<div class="col-md-9">
+							<h3>Spring Web</h3>
+						</div>
 						<div class="col-md-3">
 							<c:if test="${loginError != null}">
 								<div class="alert alert-danger" role="alert">${loginError}</div>
@@ -42,20 +43,21 @@
 								modelAttribute="user">
 								<div class="input-group">
 									<span class="input-group-addon" id="user-addon"><i
-									class="glyphicon glyphicon-user"></i></span>
+										class="glyphicon glyphicon-user"></i></span>
 									<form:input type="text" path="userName" class="form-control"
 										placeholder="Username" aria-describedby="user-addon"
 										required="true" autofocus="true" />
 								</div>
-								<div class="spacer-large col-md-12"></div>
+								<div class="col-md-12" style="height: 10px;"></div>
 								<div class="input-group">
 									<span class="input-group-addon" id="password-addon"><i
-									class="glyphicon glyphicon-asterisk"></i></span>
-									<form:input type="password" path="password" class="form-control"
-										placeholder="Password" aria-describedby="password-addon"
-										required="true" autofocus="true" />
+										class="glyphicon glyphicon-asterisk"></i></span>
+									<form:input type="password" path="password"
+										class="form-control" placeholder="Password"
+										aria-describedby="password-addon" required="true"
+										autofocus="true" />
 								</div>
-								<div class="spacer-large col-md-12"></div>
+								<div class="col-md-12" style="height: 10px;"></div>
 								<div class="col-md-12">
 									<button class="btn btn-primary btn-block" type="submit">
 										<span class="glyphicon glyphicon-log-in"></span> Login in

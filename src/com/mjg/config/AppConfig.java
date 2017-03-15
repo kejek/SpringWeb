@@ -15,7 +15,7 @@ import com.mjg.web.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.mjg")
-public class AppConfig extends WebMvcConfigurerAdapter{
+public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public ViewResolver viewResolver() {
@@ -25,17 +25,18 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 
 		return viewResolver;
 	}
+
 	@Bean
 	public MessageSource messageSource() {
-	    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-	    messageSource.setBasename("messages");
-	    return messageSource;
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("messages");
+		return messageSource;
 	}
-	
-	 public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	        registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/").setCachePeriod(31556926);
-	        registry.addResourceHandler("/fonts/**").addResourceLocations("/resources/fonts/").setCachePeriod(31556926);
-	        registry.addResourceHandler("/images/**").addResourceLocations("/resources/images/").setCachePeriod(31556926);
-	        registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/").setCachePeriod(31556926);
-	    }
+
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/").setCachePeriod(31556926);
+		registry.addResourceHandler("/fonts/**").addResourceLocations("/resources/fonts/").setCachePeriod(31556926);
+		registry.addResourceHandler("/images/**").addResourceLocations("/resources/images/").setCachePeriod(31556926);
+		registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/").setCachePeriod(31556926);
+	}
 }

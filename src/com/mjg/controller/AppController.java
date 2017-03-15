@@ -28,11 +28,12 @@ public class AppController {
 	MessageSource messageSource;
 	@Autowired
 	Login login;
-	
+
 	@ModelAttribute("savedUser")
 	public User savedUser() {
 		return new User();
 	}
+
 	@ModelAttribute("user")
 	public User user() {
 		return new User();
@@ -40,40 +41,49 @@ public class AppController {
 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String getHome(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
-		if(savedUser.isAuthenticated()){
+		if (savedUser.isAuthenticated()) {
 			return "redirect:/index";
-		}
-		else{
+		} else {
 			return "views/login.jsp";
 		}
-		
+
 	}
-	
+
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public String getSumItUp(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
-		if(login.login(user.getUserName(), user.getPassword()))
-		{
+		if (login.login(user.getUserName(), user.getPassword())) {
 			savedUser = user;
 			savedUser.setAuthenticated(true);
 			model.addAttribute("savedUser", savedUser);
 			return "redirect:/index";
+		} else {
+			model.addAttribute("loginError", "Failed to login. Login is test/test. :P ");
+
+			return "views/login.jsp";
 		}
-		else{
-			return "redirect:/login";
-		}
-		
+
 	}
+
 	@RequestMapping(value = { "/index" }, method = RequestMethod.GET)
 	public String getIndex(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
-		if(savedUser.isAuthenticated()){
+		if (savedUser.isAuthenticated()) {
 			return "views/index.jsp";
-		}
-		else{
+		} else {
 			return "redirect:/login";
 		}
-		
+
 	}
-	
+
+	@RequestMapping(value = { "/netflix" }, method = RequestMethod.GET)
+	public String getNetflix(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
+		if (savedUser.isAuthenticated()) {
+			return "views/netflix.jsp";
+		} else {
+			return "redirect:/login";
+		}
+
+	}
+
 	@RequestMapping("/logout")
 	public String logout(ModelMap model, SessionStatus sessionStatus) {
 		// Set session complete. Clears all session variables.
@@ -82,11 +92,10 @@ public class AppController {
 		return "redirect:/login";
 
 	}
-	
+
 	@SuppressWarnings("unused")
 	@RequestMapping(value = { "/*" })
-	public String catchAllUrl(HttpServletRequest request)
-			throws NoSuchRequestHandlingMethodException {
+	public String catchAllUrl(HttpServletRequest request) throws NoSuchRequestHandlingMethodException {
 		if (true) {
 			throw new NoSuchRequestHandlingMethodException(request);
 		}

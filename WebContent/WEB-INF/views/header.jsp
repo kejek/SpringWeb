@@ -39,7 +39,9 @@
 			<ul class="nav navbar-nav">
 				<li><a
 					href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/index">Home</a></li>
-
+				<c:if test="${savedUser.isAuthenticated()}">
+					<li><a href="netflix">Netflix</a></li>
+				</c:if>
 			</ul>
 			<c:if test="${savedUser.isAuthenticated()}">
 				<ul class="nav navbar-nav navbar-right">
