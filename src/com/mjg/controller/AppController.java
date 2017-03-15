@@ -11,45 +11,76 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
-import com.mjg.model.Question;
-import com.mjg.service.Problems;
-import com.mjg.utils.StringUtils;
+import com.mjg.model.User;
+import com.mjg.service.Login;
 
 @Controller
 @ControllerAdvice
 @RequestMapping("/")
+@SessionAttributes(value = { "user", "savedUser" })
 public class AppController {
 
 	@Autowired
 	MessageSource messageSource;
-	
 	@Autowired
-	Problems problem;
-
-	@RequestMapping(value = { "/index" }, method = RequestMethod.GET)
-	public String getHome(@ModelAttribute Question question, ModelMap model) {
-		return "views/index.jsp";
-	}
+	Login login;
 	
-	@RequestMapping(value = { "/index" }, method = RequestMethod.POST)
-	public String getSumItUp(@ModelAttribute Question question,ModelMap model) {
-		String error = null;
-		int answer = 0;
-		try {
-			int[] ints = StringUtils.StringArrayToIntArray(question.getValue().split(","));
-			answer = problem.SumItUp(ints);
-		} catch (Exception e) {
-			error = "Unable to retreive answer. Please check your entered values.";
-		}
-		if (error != null){
-			model.addAttribute("answer",error);
+	@ModelAttribute("savedUser")
+	public User savedUser() {
+		return new User();
+	}
+	@ModelAttribute("user")
+	public User user() {
+		return new User();
+	}
+
+	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+	public String getHome(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
+		if(savedUser.isAuthenticated()){
+			return "redirect:/index";
 		}
 		else{
-			model.addAttribute("answer", answer);
+			return "views/login.jsp";
 		}
-		return "views/index.jsp";
+		
+	}
+	
+	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
+	public String getSumItUp(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
+		if(login.login(user.getUserName(), user.getPassword()))
+		{
+			savedUser = user;
+			savedUser.setAuthenticated(true);
+			model.addAttribute("savedUser", savedUser);
+			return "redirect:/index";
+		}
+		else{
+			return "redirect:/login";
+		}
+		
+	}
+	@RequestMapping(value = { "/index" }, method = RequestMethod.GET)
+	public String getIndex(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
+		if(savedUser.isAuthenticated()){
+			return "views/index.jsp";
+		}
+		else{
+			return "redirect:/login";
+		}
+		
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(ModelMap model, SessionStatus sessionStatus) {
+		// Set session complete. Clears all session variables.
+		sessionStatus.setComplete();
+
+		return "redirect:/login";
+
 	}
 	
 	@SuppressWarnings("unused")

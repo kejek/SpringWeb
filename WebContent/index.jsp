@@ -6,7 +6,7 @@
 %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<c:redirect url="/index" />
+<c:redirect url="/login" />
 <html>
 <head>
 <!-- This page should never be displayed. It's here as it is default generated. Our dispatcher
