@@ -9,13 +9,7 @@
     margin: auto;
     max-width: 1130px;
 }
-body{
-  background-color: #171717 !important;
-  color: #FFFFFF !important;
-}
-.panel{
-  background-color: #171717 !important;
-}
+
 .btn-netflix {
     background-color: #b9090b !important;
     color: #fff;

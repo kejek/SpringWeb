@@ -17,7 +17,7 @@
 
 <!-- Use this to add navigation header templates. This will be consistent through the app -->
 <body>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header dli-brand">

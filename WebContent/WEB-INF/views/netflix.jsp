@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/style.css">
+
 
 </head>
 <body ng-app="mainApp">
@@ -14,12 +14,12 @@
 	<br />
 	<div ng-controller="mainCtrl" class='col-md-12 '>
 		<div
-			class='col-md-12  col-md-offset-3 col-sm-offset-3 col-xs-offset-1'>
+			class='col-md-12'>
 			<h1 class='text-muted'>Movie Search</h1>
 		</div>
 
 		<div
-			class='row col-md-12   col-md-offset-3 col-sm-offset-3 col-xs-offset-1'>
+			class='row col-md-12'>
 			<div class='col-md-1'>
 				<label>Title:</label>
 			</div>
@@ -38,7 +38,7 @@
 		<div class="col-md-2" style="height: 5px;"></div>
 
 		<div
-			class='row col-md-12   col-md-offset-3 col-sm-offset-3 col-xs-offset-1'>
+			class='row col-md-12'>
 			<div class='col-md-1'>
 				<label>Actor:</label>
 			</div>
@@ -55,7 +55,9 @@
 		</div>
 
 		<div class='col-md-12' style='height: 25px;'></div>
+		<div class="col-md-12">
 		{{getTitleError}}
+		</div>
 		<div class='movie-container'>
 			<div ng-repeat='value in movies' class='col-md-12 row'>
 				<div class='col-md-12 col-md-offset-1'>
