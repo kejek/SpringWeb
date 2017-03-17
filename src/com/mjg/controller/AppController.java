@@ -53,7 +53,7 @@ public class AppController {
 
 	@Loggable
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-	public String getSumItUp(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
+	public String getLogin(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
 		if (login.login(user.getUserName(), user.getPassword())) {
 			savedUser = user;
 			savedUser.setAuthenticated(true);
