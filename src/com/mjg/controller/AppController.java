@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
+import com.mjg.aspect.Loggable;
 import com.mjg.model.User;
 import com.mjg.service.Login;
 
@@ -39,6 +40,7 @@ public class AppController {
 		return new User();
 	}
 
+	@Loggable
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String getHome(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
 		if (savedUser.isAuthenticated()) {
@@ -49,6 +51,7 @@ public class AppController {
 
 	}
 
+	@Loggable
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public String getSumItUp(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
 		if (login.login(user.getUserName(), user.getPassword())) {
@@ -64,6 +67,7 @@ public class AppController {
 
 	}
 
+	@Loggable
 	@RequestMapping(value = { "/index" }, method = RequestMethod.GET)
 	public String getIndex(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
 		if (savedUser.isAuthenticated()) {
@@ -74,6 +78,7 @@ public class AppController {
 
 	}
 
+	@Loggable
 	@RequestMapping(value = { "/netflix" }, method = RequestMethod.GET)
 	public String getNetflix(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
 		if (savedUser.isAuthenticated()) {
@@ -84,6 +89,7 @@ public class AppController {
 
 	}
 
+	@Loggable
 	@RequestMapping("/logout")
 	public String logout(ModelMap model, SessionStatus sessionStatus) {
 		// Set session complete. Clears all session variables.
@@ -93,6 +99,7 @@ public class AppController {
 
 	}
 
+	@Loggable
 	@SuppressWarnings("unused")
 	@RequestMapping(value = { "/*" })
 	public String catchAllUrl(HttpServletRequest request) throws NoSuchRequestHandlingMethodException {
@@ -102,6 +109,7 @@ public class AppController {
 		return null;
 	}
 
+	@Loggable
 	@ExceptionHandler(NoSuchRequestHandlingMethodException.class)
 	public String handlePageNotFound(HttpServletRequest request) {
 		// this will return you the original URL for which this 404 happened
