@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -21,24 +22,16 @@ import com.mjg.model.Movie;
 @RequestMapping(value = "/netflix", produces = "application/json")
 public class NetflixController {
 
+	private final static String BASE_URI = "http://netflixroulette.net/api/api.php";
+
 	@Loggable
 	@RequestMapping(value = "name", method = RequestMethod.GET)
 	public ResponseEntity<Object> testMovieNoName() {
 		Movie movie = new Movie();
-		ObjectMapper mapper = new ObjectMapper();
+		RestTemplate rt = new RestTemplate();
+		String URI = BASE_URI + "?title={name}";
 		// JSON from file to Object
-		try {
-			movie = mapper.readValue(new URL("http://netflixroulette.net/api/api.php?title=Black%20Hawk%20Down"),
-					Movie.class);
-		} catch (JsonParseException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (JsonMappingException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (MalformedURLException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (IOException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		movie = rt.getForObject(URI, Movie.class, "Black Hawk Down");
 
 		return new ResponseEntity<Object>(movie, HttpStatus.OK);
 	}
@@ -47,20 +40,10 @@ public class NetflixController {
 	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
 	public ResponseEntity<Object> testMovie(@PathVariable String name) {
 		Movie movie = new Movie();
-		ObjectMapper mapper = new ObjectMapper();
+		RestTemplate rt = new RestTemplate();
+		String URI = BASE_URI + "?title={name}";
 		// JSON from file to Object
-		try {
-			movie = mapper.readValue(new URL("http://netflixroulette.net/api/api.php?title=" + name), Movie.class);
-		} catch (JsonParseException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-
-		} catch (JsonMappingException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (MalformedURLException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (IOException e) {
-			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		movie = rt.getForObject(URI, Movie.class, name);
 
 		return new ResponseEntity<Object>(movie, HttpStatus.OK);
 	}
@@ -71,7 +54,7 @@ public class NetflixController {
 		// Forces an Error
 		throw new JsonMappingException(name);
 	}
-	
+
 	@Loggable
 	@RequestMapping(value = "error2/{name}", method = RequestMethod.GET)
 	public ResponseEntity<Object> testError2(@PathVariable String name) throws Exception {
