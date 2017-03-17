@@ -21,20 +21,14 @@ import com.mjg.model.Search;
 @RestController
 @RequestMapping(value = "/netflix", produces = "application/json")
 public class NetflixController {
-
-	@RequestMapping(value = "name", method = RequestMethod.POST)
-	public Movie getMoviesByName(@ModelAttribute("search") Search search) {
-		return new Movie();
-	}
-
+	
 	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
 	public ResponseEntity<Object> testMovie(@PathVariable String name) {
 		Movie movie = new Movie();
 		ObjectMapper mapper = new ObjectMapper();
 		// JSON from file to Object
 		try {
-			movie = mapper.readValue(new URL("http://netflixroulette.net/api/api.php?title=" + name),
-					Movie.class);
+			movie = mapper.readValue(new URL("http://netflixroulette.net/api/api.php?title=" + name), Movie.class);
 		} catch (JsonParseException e) {
 			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
 
@@ -47,5 +41,11 @@ public class NetflixController {
 		}
 
 		return new ResponseEntity<Object>(movie, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "error/{name}", method = RequestMethod.GET)
+	public ResponseEntity<Object> testError(@PathVariable String name) throws Exception {
+		// Forces an Error
+		throw new Exception();
 	}
 }
