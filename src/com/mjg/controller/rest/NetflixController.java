@@ -7,6 +7,7 @@ import java.net.URL;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,13 +27,13 @@ public class NetflixController {
 		return new Movie();
 	}
 
-	@RequestMapping(value = "name", method = RequestMethod.GET)
-	public ResponseEntity<Object> testMovie() {
+	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
+	public ResponseEntity<Object> testMovie(@PathVariable String name) {
 		Movie movie = new Movie();
 		ObjectMapper mapper = new ObjectMapper();
 		// JSON from file to Object
 		try {
-			movie = mapper.readValue(new URL("http://netflixroulette.net/api/api.php?title=Breaking%20Bad"),
+			movie = mapper.readValue(new URL("http://netflixroulette.net/api/api.php?title=" + name),
 					Movie.class);
 		} catch (JsonParseException e) {
 			return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
