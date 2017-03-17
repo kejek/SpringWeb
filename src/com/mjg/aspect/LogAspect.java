@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 @Aspect
 @Component
 public class LogAspect {
@@ -65,9 +67,20 @@ public class LogAspect {
 		System.out.println("******");
 	}
 
-	// Runs only if a method has thrown an exception
-	// @AfterThrowing("anyNetflixMethod()")
-	@AfterThrowing("loggableMethods()")
+	// Runs only if a method has thrown a specific Exception (JsonMappingException
+	@AfterThrowing(value="loggableMethods()", throwing="ex")
+	public void methodError(JoinPoint joinPoint, JsonMappingException ex) {
+		System.out.println("methodError() is running!");
+		System.out.println("Error : " + joinPoint.getSignature().getName());
+		System.out.println("Exception : " + ex.getMessage());
+		for (Object obj : joinPoint.getArgs()) {
+			System.out.println("Args : " + obj.toString());
+		}
+		System.out.println("******");
+	}
+	
+	//Runs if throws exception - catches others
+	@AfterThrowing(value="loggableMethods()")
 	public void methodError(JoinPoint joinPoint) {
 		System.out.println("methodError() is running!");
 		System.out.println("Error : " + joinPoint.getSignature().getName());

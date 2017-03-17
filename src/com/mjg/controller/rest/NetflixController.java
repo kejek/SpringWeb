@@ -6,7 +6,6 @@ import java.net.URL;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +16,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjg.aspect.Loggable;
 import com.mjg.model.Movie;
-import com.mjg.model.Search;
 
 @RestController
 @RequestMapping(value = "/netflix", produces = "application/json")
@@ -72,5 +70,12 @@ public class NetflixController {
 	public ResponseEntity<Object> testError(@PathVariable String name) throws JsonMappingException {
 		// Forces an Error
 		throw new JsonMappingException(name);
+	}
+	
+	@Loggable
+	@RequestMapping(value = "error2/{name}", method = RequestMethod.GET)
+	public ResponseEntity<Object> testError2(@PathVariable String name) throws Exception {
+		// Forces an Error
+		throw new Exception(name);
 	}
 }
