@@ -22,7 +22,7 @@ import com.mjg.service.Login;
 @Controller
 @ControllerAdvice
 @RequestMapping("/")
-@SessionAttributes(value = { "user", "savedUser" })
+@SessionAttributes(value = {"savedUser" })
 public class AppController {
 
 	@Autowired
@@ -69,7 +69,7 @@ public class AppController {
 
 	@Loggable
 	@RequestMapping(value = { "/index" }, method = RequestMethod.GET)
-	public String getIndex(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
+	public String getIndex(@ModelAttribute("savedUser") User savedUser, ModelMap model) {
 		if (savedUser.isAuthenticated()) {
 			return "views/index.jsp";
 		} else {
@@ -80,7 +80,7 @@ public class AppController {
 
 	@Loggable
 	@RequestMapping(value = { "/netflix" }, method = RequestMethod.GET)
-	public String getNetflix(@ModelAttribute User user, @ModelAttribute("savedUser") User savedUser, ModelMap model) {
+	public String getNetflix(@ModelAttribute("savedUser") User savedUser, ModelMap model) {
 		if (savedUser.isAuthenticated()) {
 			return "views/netflix.jsp";
 		} else {

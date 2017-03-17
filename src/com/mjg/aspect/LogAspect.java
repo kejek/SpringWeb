@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.mjg.model.User;
 
 @Aspect
 @Component
@@ -63,6 +64,10 @@ public class LogAspect {
 		System.out.println("Successful Run : " + joinPoint.getSignature().getName());
 		for (Object obj : joinPoint.getArgs()) {
 			System.out.println("Args : " + obj.toString());
+			if(obj != null && obj.getClass().equals(User.class) ){
+				User user = (User) obj;
+				System.out.println("User: " + user.getUserName());
+			}
 		}
 		System.out.println("******");
 	}
