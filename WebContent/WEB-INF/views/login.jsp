@@ -30,9 +30,16 @@
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
+					<c:if test="${fn:length(errorMsg)>0}">
+						<div class="alert alert-danger" role="alert">${errorMsg}</div>
+					</c:if>
+					<c:if test="${fn:length(successMsg)>0}">
+						<div class="alert alert-success" role="alert">${successMsg}</div>
+					</c:if>
 					<div class="row">
 						<div class="col-md-9">
 							<h3>Spring Web</h3>
+
 						</div>
 						<div class="col-md-3">
 							<c:if test="${loginError != null}">
@@ -64,6 +71,11 @@
 									</button>
 								</div>
 							</form:form>
+							<div class="col-md-12 text-center">
+								<a
+									href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/createUser">Create
+									New User</a>
+							</div>
 						</div>
 					</div>
 				</div>

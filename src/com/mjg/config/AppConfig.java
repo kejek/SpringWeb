@@ -1,5 +1,6 @@
 package com.mjg.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,6 +34,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
 		return messageSource;
+	}
+	
+	@Bean
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
 	}
 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
